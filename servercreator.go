@@ -357,11 +357,9 @@ func makeSelectorItems() []selectorItem {
 	var versionList []string
 	var urlList []string
 	for _, version := range list.Versions {
-		r, _ := regexp.Compile("0*[1-9][0-9]*.[1-9][0-9]")
-		if strings.Contains(version.ID, "-") || strings.Contains(version.ID, "w") || !r.MatchString(version.ID) {
-			continue
-		}
-		if !r.MatchString(version.ID) {
+		r, _ := regexp.Compile(`[\d/-]+$`)
+		lr, _ := regexp.Compile(`[a-zA-Z]`)
+		if strings.Contains(version.ID, "-") || lr.MatchString(version.ID) || !r.MatchString(version.ID) {
 			continue
 		}
 		id := version.ID
